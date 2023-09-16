@@ -20,7 +20,7 @@ class Triangle():
         
     # def set_up_triangle(self, a, b, c):
         
-    def classify(self) -> str:
+    def classify_triangle(self) -> str:
         if self.is_equilateral():
             self.CLASSIFICATION = self.EQUILATERAL
         elif self.is_isosceles():
@@ -69,7 +69,7 @@ class TriangleTest(unittest.TestCase):
     def test_equilateral_pass(self):
         points = self.INPUT['equilateral']['not_right']['pass']
         t = Triangle(points[0], points[1], points[2])
-        s = t.classify()
+        s = t.classify_triangle()
         self.assertEqual(s, 'equilateral and not right')
 
     def test_equilateral_fail(self):
@@ -88,10 +88,10 @@ class TriangleTest(unittest.TestCase):
         point_not_right = self.INPUT['scalene']['not_right']['pass']
 
         t = Triangle(point_right[0], point_right[1], point_right[2])
-        self.assertEqual(t.classify(), 'scalene and right')
+        self.assertEqual(t.classify_triangle(), 'scalene and right')
 
         t = Triangle(point_not_right[0], point_not_right[1], point_not_right[2])
-        self.assertEqual(t.classify(), 'scalene and not right')
+        self.assertEqual(t.classify_triangle(), 'scalene and not right')
 
 
     def test_scalene_fail(self):
@@ -114,7 +114,7 @@ class TriangleTest(unittest.TestCase):
         point_right = self.INPUT['isosceles']['right']['pass']
         t = Triangle(point_right[0], point_right[1], point_right[2])
 
-        self.assertEqual(t.classify(), 'isosceles and right')
+        self.assertEqual(t.classify_triangle(), 'isosceles and right')
 
     def test_isosceles_fail(self):
         point_right = self.INPUT['isosceles']['right']['fail']
