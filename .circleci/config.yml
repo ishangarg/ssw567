@@ -14,7 +14,7 @@ jobs:
             pip install pytest
             pytest --junitxml=test-results/junit.xml hw02/TestTriangl_modified.py
       - store_test_results:
-        path: test-results
+          path: test-results
 
 workflows:
   testing_triangles:
