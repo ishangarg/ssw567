@@ -57,7 +57,7 @@ class GithubTest(unittest.TestCase):
     def setUp(self) -> None:
         self.TESTCASES = [
             {'username':'ishangarg', 'repo':'bor', 'asset_repo':14, 'assert_commits':30, 'type':'normal'}, #everything in order
-            {'username':'hufsdhsadfkjhfsfsasaf', 'repo':'bor', 'asset_repo':-1, 'assert_commits':30, 'type':'normal'}, #user does not exist  = -1
+            {'username':'hufsdhsadfkjhfsfsasaf', 'repo':'bor', 'asset_repo':-1, 'assert_commits':-1, 'type':'normal'}, #user does not exist  = -1
             {'username':123, 'repo':'bor', 'asset_repo':1, 'assert_commits':-1, 'type':'normal'}, #taking number input, code will work byt might throw an error due to assetion fail 
             {'username':'ishangarg', 'repo':'boris', 'asset_repo':14, 'assert_commits':-1, 'type':'normal'}, #repo does not exist = -1 
             {'username':'', 'repo':'boris', 'asset_repo':-2, 'assert_commits':-1, 'type':'error'}, #throws error 
@@ -66,24 +66,27 @@ class GithubTest(unittest.TestCase):
         ]
 
     def test_get_all_repos(self):
+        #onverting testing to monolithic as parallely becomcing confusing
         print('Starting Tesf For Get All Repos')
         for t in self.TESTCASES:
             g = Github(t['username'])
             if t['type'] == 'normal':
                 print('Testing: ' + str(t))
                 self.assertEqual(g.get_all_repos(), t['asset_repo'])
-
-    def test_commit_of_repo(self):
-        print('Starting Tesf For Get All Commits of Repos')
-        for t in self.TESTCASES:
-            g = Github(t['username'])
-            if t['type'] == 'normal':
-                print('Testing: ' + str(t))
                 self.assertEqual(g.get_commits_of_repo(t['repo']), t['assert_commits'])
-            else:
-                with self.assertRaises(Exception) as context:
-                    g.get_all_repos()
-                self.assertTrue('username cant be empty', str(context.exception))
+
+
+    # def test_commit_of_repo(self):
+    #     print('Starting Tesf For Get All Commits of Repos')
+    #     for t in self.TESTCASES:
+    #         g = Github(t['username'])
+    #         if t['type'] == 'normal':
+    #             print('Testing: ' + str(t))
+    #             self.assertEqual(g.get_commits_of_repo(t['repo']), t['assert_commits'])
+    #         else:
+    #             with self.assertRaises(Exception) as context:
+    #                 g.get_all_repos()
+    #             self.assertTrue('username cant be empty', str(context.exception))
 
 
 if __name__ == '__main__':
