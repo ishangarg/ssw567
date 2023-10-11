@@ -7,6 +7,33 @@ class Github():
         if not type(username) == str:
             username = str(username)
         self.username = username
+
+    def get_user(self):
+        print(len(self.username))
+        if len(self.username) == 0 or self.username == '':
+            return -2
+        
+        url = 'https://api.github.com/users/%s/repos' % self.username
+        print(url)
+        data = requests.get(url)
+        # print(data.status_code)
+        if data.status_code == 200:
+            self.repos = json.loads(data.text)
+            if 'message' in self.repos and self.repos['message'] == 'Not Found':
+                print('User Not Found')
+                return -1
+            else:
+                # print(self.repos)
+                # return len(self.repos)
+                for r in self.repos:
+                    repo = requests.get(r['url'])
+                    if repo.status_code == 200:
+                        repo_data = json.loads(repo.text)
+                        commit_count = self.get_commits_of_repo(repo_data['name'])
+                        print('Repo: %s Number of commits: %s' % (repo_data['name'], commit_count))
+        elif data.status_code == 404:
+            print('User Not Found')
+            return -1
     
     def get_all_repos(self):
         print(len(self.username))
@@ -91,3 +118,5 @@ class GithubTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    # g = Github('ishangarg')
+    # g.get_user()
